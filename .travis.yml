@@ -11,5 +11,5 @@ deploy:
     provider: heroku
     api_key: $HEROKU_API_KEY
     app:
-        master: js-react-weather-app
+        master: pure-js-weather-app
     skip_cleanup: true
