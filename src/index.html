@@ -11,7 +11,7 @@
 <body>
     <div id="root">
         <div class="row">
-            <div class="col s12">
+            <div class="col s6">
                 <div class="row">
                     <div class="input-field col s12">
                         <input type="text" id="location-input" />
@@ -19,11 +19,28 @@
                     </div>
                 </div>
             </div>
+            <div class="col s6">
+                <div class="row">
+                    <input type="text" id="datepicker" />
+                    <label for="datepicker">Date</label>
+                </div>
+            </div>
         </div>
         <p>
             <p id="temperature"></p>
             <p id="weather-description" ></p>
         </div>
+        <table id="historical-table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Temperature</th>
+                    <th>Pressure</th>
+                </tr>
+            </thead>
+            <tbody class="table-content">
+            </tbody>
+        </table>
     </div>
 </body>
 </html>

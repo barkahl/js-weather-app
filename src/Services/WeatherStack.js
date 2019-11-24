@@ -7,7 +7,7 @@ const fetchSuggestions = async query => {
     return data.results || [];
 };
 
-const fetchWeather = async location => {
+const fetchCurrentWeather = async location => {
     const url = `/api/current?query=${location}`;
 
     const response = await fetch(url);
@@ -19,7 +19,20 @@ const fetchWeather = async location => {
     };
 };
 
+const fetchHistoricalWeather = async ({ location, date }) => {
+    const url = `/api/historical?query=${location}&historical_date=${date}&hourly=1`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    return {
+        weather: data.historical,
+        location: data.location,
+    };
+};
+
 export {
     fetchSuggestions,
-    fetchWeather,
+    fetchCurrentWeather,
+    fetchHistoricalWeather,
 };
