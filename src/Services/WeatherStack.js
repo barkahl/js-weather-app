@@ -1,3 +1,5 @@
+import {format} from "date-fns";
+
 const fetchSuggestions = async query => {
     const url = `/api/autocomplete?query=${query}`;
 
@@ -14,19 +16,21 @@ const fetchCurrentWeather = async location => {
     const data = await response.json();
 
     return {
-        weather: data.current,
+        current: data.current,
         location: data.location,
     };
 };
 
 const fetchHistoricalWeather = async ({ location, date }) => {
-    const url = `/api/historical?query=${location}&historical_date=${date}&hourly=1`;
+    const formattedDate = format(date, 'yyyy-MM-dd');
+    const url = `/api/historical?query=${location}&historical_date=${formattedDate}&hourly=1`;
 
     const response = await fetch(url);
     const data = await response.json();
 
     return {
-        weather: data.historical,
+        current: data.current,
+        historical: data.historical[formattedDate],
         location: data.location,
     };
 };

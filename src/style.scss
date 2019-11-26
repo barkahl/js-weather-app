@@ -1,0 +1,66 @@
+#root {
+  width: 600px;
+  margin: 0 auto;
+
+  .input-field {
+    width: 300px;
+    margin: 0 auto;
+  }
+
+  .location {
+    text-align: center;
+  }
+
+  .weather-status {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+    .item {
+      font-size: 20px;
+    }
+
+    .description {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        margin-right: 20px;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .controls {
+    display: flex;
+    width: 400px;
+    justify-content: space-around;
+    margin: 0 auto;
+
+    .checkbox {
+      opacity: 1;
+      pointer-events: all;
+      position: static;
+    }
+
+    .datepicker {
+      width: 200px;
+    }
+  }
+
+  .progress {
+    width: 100px;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+
+  .historical-table {
+    th, td {
+      text-align: center;
+    }
+  }
+}
+
