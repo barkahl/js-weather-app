@@ -53,8 +53,8 @@ const createHistoricalDataTable = (data, className) => {
     const theadRow = document.createElement('tr');
     const theadRowCells = [
         'Time',
-        'Temperature',
-        'Pressure',
+        'Temperature [°C]',
+        'Pressure [hPa]',
         'Description',
     ].map(title => {
         const th = document.createElement('th');
