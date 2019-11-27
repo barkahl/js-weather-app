@@ -25,14 +25,18 @@ const fetchHistoricalWeather = async ({ location, date }) => {
     const formattedDate = format(date, 'yyyy-MM-dd');
     const url = `/api/historical?query=${location}&historical_date=${formattedDate}&hourly=1`;
 
-    const response = await fetch(url);
-    const data = await response.json();
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
 
-    return {
-        current: data.current,
-        historical: data.historical[formattedDate],
-        location: data.location,
-    };
+        return {
+            current: data.current,
+            historical: data.historical[formattedDate],
+            location: data.location,
+        };
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 export { fetchSuggestions, fetchCurrentWeather, fetchHistoricalWeather };
