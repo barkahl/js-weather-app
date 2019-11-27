@@ -8,16 +8,21 @@
   "scripts": {
     "dev": "webpack -w",
     "build": "NODE_ENV=production webpack",
-    "server": "node server.js"
+    "server": "node server.js",
+    "prettier": "prettier --write 'src/**/*.js'",
+    "lint": "eslint 'src/**/*.js'"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
+    "eslint": "^6.7.1",
+    "eslint-config-prettier": "^6.7.0",
     "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.13.0",
     "path": "^0.12.7",
+    "prettier": "^1.19.1",
     "regenerator-runtime": "^0.13.3",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",

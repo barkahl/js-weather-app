@@ -1,4 +1,4 @@
-import {format} from "date-fns";
+import { format } from 'date-fns';
 
 const fetchSuggestions = async query => {
     const url = `/api/autocomplete?query=${query}`;
@@ -35,8 +35,4 @@ const fetchHistoricalWeather = async ({ location, date }) => {
     };
 };
 
-export {
-    fetchSuggestions,
-    fetchCurrentWeather,
-    fetchHistoricalWeather,
-};
+export { fetchSuggestions, fetchCurrentWeather, fetchHistoricalWeather };

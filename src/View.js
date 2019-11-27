@@ -1,6 +1,6 @@
 import { Autocomplete, Datepicker } from 'materialize-css';
 import { Chart } from 'chart.js';
-import {createHistoricalDataTable, createLoader } from "./Utils/Dom";
+import { createHistoricalDataTable, createLoader } from './Utils/Dom';
 import { formatTime } from './Utils/Helpers';
 
 const autocompleteOptions = {
@@ -22,6 +22,7 @@ class View {
         this.datePickerInput.setAttribute('type', 'text');
         this.datePickerInput.setAttribute('class', 'datepicker');
         this.datePickerWrapper = document.createElement('div');
+        this.datePickerWrapper.className = 'datepicker-wrapper';
         this.datePickerWrapper.append(this.datePickerInput);
 
         this.weatherStatusWrapper = document.createElement('section');
@@ -30,9 +31,17 @@ class View {
         this.controls.setAttribute('class', 'controls');
         this.historicalSearchModeCheckbox = document.createElement('input');
         this.historicalSearchModeCheckbox.setAttribute('type', 'checkbox');
-        this.historicalSearchModeCheckbox.setAttribute('class', 'checkbox');
+        this.historicalSearchModeCheckbox.className = 'checkbox';
+        const checkboxWrapper = document.createElement('div');
+        checkboxWrapper.className = 'checkbox-wrapper';
+        const checkboxLabel = document.createElement('p');
+        checkboxLabel.innerText = 'Historical data';
+        checkboxWrapper.append(
+            this.historicalSearchModeCheckbox,
+            checkboxLabel
+        );
 
-        this.controls.append(this.historicalSearchModeCheckbox);
+        this.controls.append(checkboxWrapper);
 
         this.historicalWeatherWrapper = document.createElement('div');
 
@@ -40,53 +49,50 @@ class View {
             locationInputWrapper,
             this.weatherStatusWrapper,
             this.controls,
-            this.historicalWeatherWrapper,
+            this.historicalWeatherWrapper
         );
-
-        // this.bindOnLocationInputChange = this.bindOnLocationInputChange.bind(this);
-        // this.bindOnLocationInputSelect = this.bindOnLocationInputSelect.bind(this);
-        // this.updateLocationSuggestions = this.updateLocationSuggestions.bind(this);
     }
 
     bindOnLocationInputChange(handler) {
-        this.locationInput.addEventListener(
-            'input',
-                event => handler(event.target.value)
+        this.locationInput.addEventListener('input', event =>
+            handler(event.target.value)
         );
-    };
+    }
 
     bindOnLocationInputSelect(handler) {
         this.autoCompleteInput = Autocomplete.init(this.locationInput, {
             ...autocompleteOptions,
             onAutocomplete: handler,
         });
-    };
+    }
 
     bindOnCheckboxStateChange(handler) {
-        this.historicalSearchModeCheckbox.addEventListener('change', event => handler(event.target.checked));
+        this.historicalSearchModeCheckbox.addEventListener('change', event =>
+            handler(event.target.checked)
+        );
     }
 
     bindOnDateSelect(handler) {
         this.datePicker = Datepicker.init(this.datePickerInput, {
             format: 'yyyy-mm-dd',
             onSelect: handler,
-        })
+        });
     }
 
     updateLocationSuggestions(suggestions) {
         console.log(suggestions);
         this.autoCompleteInput.updateData(
-            suggestions.reduce(
-                (acc, curr) => {
-                    acc[curr.name] = null;
-                    return acc;
-                },
-                {}
-            )
+            suggestions.reduce((acc, curr) => {
+                acc[curr.name] = null;
+                return acc;
+            }, {})
         );
     }
 
-    renderCurrentWeatherStatus(location, { temperature, pressure, weather_descriptions, weather_icons }) {
+    renderCurrentWeatherStatus(
+        location,
+        { temperature, pressure, weather_descriptions, weather_icons }
+    ) {
         const temperatureElement = document.createElement('span');
         temperatureElement.innerText = temperature + '°C';
         temperatureElement.setAttribute('class', 'item');
@@ -95,13 +101,13 @@ class View {
         pressureElement.innerText = pressure + ' hPa';
         pressureElement.setAttribute('class', 'item');
 
-        const descriptionWrapper = document.createElement(('div'));
+        const descriptionWrapper = document.createElement('div');
         descriptionWrapper.setAttribute('class', 'description');
 
         const descriptionElements = weather_descriptions.map(description => {
             const element = document.createElement('span');
             element.innerText = description;
-            element.setAttribute('class', 'item')
+            element.setAttribute('class', 'item');
             return element;
         });
 
@@ -118,7 +124,10 @@ class View {
         const iconElementsWrapper = document.createElement('div');
         iconElementsWrapper.append(...iconElements);
 
-        descriptionWrapper.append(iconElementsWrapper, descriptionElementsWrapper);
+        descriptionWrapper.append(
+            iconElementsWrapper,
+            descriptionElementsWrapper
+        );
 
         const weatherStatus = document.createElement('div');
         weatherStatus.setAttribute('class', 'weather-status');
@@ -140,15 +149,14 @@ class View {
         const loader = createLoader();
         this.weatherStatusWrapper.innerHTML = '';
         this.weatherStatusWrapper.append(loader);
-    };
+    }
 
     renderDatePicker() {
         this.controls.appendChild(this.datePickerWrapper);
-    };
+    }
 
     removeDatePicker() {
-        this.controls.innerHTML = '';
-        this.controls.append(this.historicalSearchModeCheckbox);
+        this.datePickerWrapper.remove();
     }
 
     renderHistoricalWeatherLoader() {
@@ -172,16 +180,23 @@ class View {
         new Chart(chartElement, {
             type: 'line',
             data: {
-                labels: weather.hourly.map(({time}) => formatTime(time)),
-                datasets: [{
-                    label: 'Temperature',
-                    data: weather.hourly.map(({temperature}) => temperature),
-                    fill: false,
-                }]
-            }
+                labels: weather.hourly.map(({ time }) => formatTime(time)),
+                datasets: [
+                    {
+                        label: 'Temperature',
+                        data: weather.hourly.map(
+                            ({ temperature }) => temperature
+                        ),
+                        fill: false,
+                    },
+                ],
+            },
         });
 
-        const historicalDataTable = createHistoricalDataTable(weather.hourly, 'historical-table');
+        const historicalDataTable = createHistoricalDataTable(
+            weather.hourly,
+            'historical-table'
+        );
         this.historicalWeatherWrapper.append(chartElement, historicalDataTable);
     }
 }

@@ -1,5 +1,7 @@
-import {fetchHistoricalWeather, fetchSuggestions} from "./Services/WeatherStack";
-import { format } from 'date-fns';
+import {
+    fetchHistoricalWeather,
+    fetchSuggestions,
+} from './Services/WeatherStack';
 
 class Model {
     constructor() {
@@ -8,23 +10,23 @@ class Model {
 
     getLocation() {
         return this.location;
-    };
+    }
 
     setLocation(location) {
         this.location = location;
-    };
+    }
 
     getCurrentWeather() {
         return this.currentWeather;
-    };
+    }
 
     setCurrentWeather(currentWeather) {
         this.currentWeather = currentWeather;
-    };
+    }
 
-    fetchHistoricalWeather(date) {
-        return fetchHistoricalWeather({ location: this.location, date });
-    };
+    fetchHistoricalWeather(location, date) {
+        return fetchHistoricalWeather({ location, date });
+    }
 
     fetchSuggestions(query) {
         return fetchSuggestions(query);

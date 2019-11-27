@@ -37,13 +37,24 @@
   .controls {
     display: flex;
     width: 400px;
-    justify-content: space-around;
-    margin: 0 auto;
+    height: 51px;
+    margin: 20px auto;
+
+    .checkbox-wrapper {
+      display: flex;
+      align-items: center;
+      justify-self: flex-start;
+    }
+
+    .datepicker-wrapper {
+      margin-left: auto;
+    }
 
     .checkbox {
       opacity: 1;
       pointer-events: all;
       position: static;
+      margin-right: 10px;
     }
 
     .datepicker {
@@ -58,8 +69,23 @@
   }
 
   .historical-table {
+    margin: 20px auto;
+
     th, td {
       text-align: center;
+      padding: 5px 10px;
+    }
+
+    tr {
+      border: none;
+    }
+
+    .row {
+      border-top: 1px solid #ccc;
+    }
+
+    .icon {
+      width: 30px;
     }
   }
 }
