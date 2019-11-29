@@ -1,11 +1,13 @@
 import {
     fetchCurrentWeather,
     fetchHistoricalWeather,
-} from './Services/WeatherStack';
+} from '../Services/WeatherStack';
 
 class Controller {
-    constructor(model, view) {
-        this.model = model;
+    constructor(weatherModel, locationModel, historicalDateModel, view) {
+        this.weatherModel = weatherModel;
+        this.locationModel = locationModel;
+        this.historicalDateModel = historicalDateModel;
         this.view = view;
 
         this.view.bindOnLocationInputSelect(
@@ -21,24 +23,27 @@ class Controller {
     }
 
     async onLocationInputChange(query) {
-        const suggestions = await this.model.fetchSuggestions(query);
+        const suggestions = await this.locationModel.getSuggestions(query);
         this.view.updateLocationSuggestions(suggestions);
     }
 
     async onLocationInputSelect(location) {
+        this.locationModel.setLocation(location);
         this.view.renderCurrentWeatherLoader();
-        this.location = location;
 
         if (this.isHistoricalSearchEnabled) {
             this.view.renderHistoricalWeatherLoader();
-            const { current, historical } = await fetchHistoricalWeather({
+            const {
+                current,
+                historical,
+            } = await this.weatherModel.getHistorical(
                 location,
-                date: this.historicalDate,
-            });
+                this.historicalDateModel.getDate()
+            );
             this.view.renderCurrentWeatherStatus(location, current);
             this.view.renderHistoricalWeather(historical);
         } else {
-            const { current } = await fetchCurrentWeather(location);
+            const { current } = await this.weatherModel.getCurrent(location);
             this.view.renderCurrentWeatherStatus(location, current);
         }
     }
@@ -54,12 +59,13 @@ class Controller {
     }
 
     async onDateSelect(date) {
-        this.historicalDate = date;
+        this.historicalDateModel.setDate(date);
+        const location = this.locationModel.getLocation();
 
-        if (date && this.location) {
+        if (date && location) {
             this.view.renderHistoricalWeatherLoader();
-            const { historical } = await this.model.fetchHistoricalWeather(
-                this.location,
+            const { historical } = await this.weatherModel.getHistorical(
+                location,
                 date
             );
             this.view.renderHistoricalWeather(historical);

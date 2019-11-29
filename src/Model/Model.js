@@ -1,7 +1,7 @@
 import {
     fetchHistoricalWeather,
     fetchSuggestions,
-} from './Services/WeatherStack';
+} from '../Services/WeatherStack';
 
 class Model {
     constructor() {

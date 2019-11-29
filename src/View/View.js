@@ -1,7 +1,7 @@
 import { Autocomplete, Datepicker } from 'materialize-css';
 import { Chart } from 'chart.js';
-import { createHistoricalDataTable, createLoader } from './Utils/Dom';
-import { formatTime } from './Utils/Helpers';
+import { createHistoricalDataTable, createLoader } from '../Utils/Dom';
+import { formatTime } from '../Utils/Helpers';
 
 const autocompleteOptions = {
     data: {},
