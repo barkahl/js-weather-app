@@ -1,8 +1,3 @@
-import {
-    fetchCurrentWeather,
-    fetchHistoricalWeather,
-} from '../Services/WeatherStack';
-
 class Controller {
     constructor(weatherModel, locationModel, historicalDateModel, view) {
         this.weatherModel = weatherModel;
